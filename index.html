@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$BIGCHILL</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="../external.html?link=https://www.googletagmanager.com/gtag/js?id=G-BJFZFEM7X8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-BJFZFEM7X8');
+    </script>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            color: #FFD700; /* Gold color */
+            background: radial-gradient(circle, #1a1a1a, black);
+            overflow: scroll;
+        }
+
+        /* Floating Solana Logos */
+        .solana-logo {
+            position: absolute;
+            width: 25px; /* Icon size */
+            animation: fadeInOut 4s infinite ease-in-out, moveRandomly 6s infinite ease-in-out;
+            opacity: 0.5;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes moveRandomly {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -20px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(30px, -30px); }
+            100% { transform: translate(0, 0); }
+        }
+
+#notification-container {
+    position: fixed;
+    bottom: 90%;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    background-color: black;
+    color: #FFD700;
+    padding: 10px 20px;
+    border: 2px solid #FFD700;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInOut 4s ease;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    opacity: 0;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    10%, 90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+        /* Main Content */
+        .content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+            color: #FFD700;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FF4500;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        /* Token Information */
+        .token-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .token-info p {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+/* Modal Styles */
+#presaleModal {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    overflow: hidden; /* Prevent scrolling on the background */
+}
+
+#presaleModal div {
+    max-height: 90%; /* Limit height to allow scrolling inside */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 80%;
+    margin: 50px auto;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#closeModal {
+    background: #FFD700;
+    color: black;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#copyAddress {
+    background-color: #FFD700;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+        /* Countdown Timer Styling */
+        .countdown-container {
+            text-align: center;
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        #timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        /* Live Charts Section */
+        .charts {
+            background: black; /* Ensure black background */
+            border: 1px solid #FFD700;
+            border-radius: 13px;
+            padding: 15px;
+            height: 500px;
+            margin-top: 20px;
+            color: white;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            background: black; /* Black background for the iframe */
+        }
+
+        /* Footer Marquee */
+        footer {
+            margin-top: 20px;
+            background: #FFD700;
+            color: black;
+            padding: 10px;
+        }
+
+        footer marquee {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Social Media Icons */
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .socials img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .socials img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Main Banner Styling */
+        .main-banner {
+            background: linear-gradient(#1a1a1a);
+            padding: 0px 0;
+            text-align: center;
+        }
+
+        .main-banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+
+        .main-banner p {
+            font-size: 1.25rem;
+            color: #FFD700;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .main-banner a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #FFD700;
+            color: black;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: background-color 0.3s;
+        }
+    /* Liquid Animation */
+    @keyframes liquid-shake {
+        0% {
+            transform: translateY(0);
+        }
+        25% {
+            transform: translateY(-3px);
+        }
+        50% {
+            transform: translateY(2px);
+        }
+        75% {
+            transform: translateY(-2px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+        /* Testimonial Section */
+        .testimonials {
+            padding: 50px 0;
+            background-color: #1a1a1a;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .testimonial-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-card p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .testimonial-card h3 {
+            font-size: 1.25rem;
+            color: #FFD700;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .token-info h2 {
+                font-size: 1.2rem;
+            }
+
+            .token-info p {
+                font-size: 0.9rem;
+            }
+
+            .main-banner h1 {
+                font-size: 2rem;
+            }
+
+            .main-banner p {
+                font-size: 1rem;
+            }
+            
+
+            .testimonial-card {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+	<div id="notification-container"></div>
+	<!-- Floating FAQ Widget -->
+<div id="faq-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+    <div id="faq-button" 
+         style="background: #FFD700; width: 60px; height: 60px; border-radius: 50%; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <span style="font-size: 1.5rem; font-weight: bold; color: #000;">?</span>
+    </div>
+    <div id="faq-box" 
+         style="display: none; position: absolute; bottom: 80px; right: 0; background: #1a1a1a; color: #FFF; border-radius: 10px; width: 300px; padding: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); max-height: 60vh; overflow-y: auto;">
+        <h3 style="color: #FFD700; text-align: center; margin-bottom: 10px;">FAQs</h3>
+        <div id="faq-questions">
+            <div style="margin-bottom: 15px;">
+                <h4 style="margin: 0; font-size: 1rem;">1. How do I purchase $BIGCHILL tokens?</h4>
+                <p style="font-size: 0.9rem; margin: 5px 0;">Click the "Join The Presale Now" button on the website to access the purchase page. Use the provided calculator to determine how much Solana (SOL) you need to send to get the desired amount of $BIGCHILL. Copy the contract address from the website. Go to your Solana wallet (e.g., Phantom or Trustwallet), and paste the contract address in the recipient section. Enter the amount of SOL you wish to send based on the calculator's suggestion. Include your name in the description section for identification purposes. Send the transaction, and then take a screenshot of the transaction details. Send the screenshot to our <a href="https://t.me/Bigchills74">BIGCHILL PAYMENT GATEWAY</a> to confirm your order. Then you receive your $BIGCHILL token within 1min.</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <h4 style="margin: 0; font-size: 1rem;">2. What rewards do I get for purchasing $BIGCHILL?</h4>
+                <p style="font-size: 0.9rem; margin: 5px 0;">Earn 3x the value of your investment during the pre-sale. Offer ends December 23rd!</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <h4 style="margin: 0; font-size: 1rem;">3. Are there any risks involved in buying $BIGCHILL?</h4>
+                <p style="font-size: 0.9rem; margin: 5px 0;">As with all crypto investments, risks exist. But this is like no other crypto we prioritize in the increasing of our token. It is risk-free.</p>
+            </div>
+            <div>
+                <h4 style="margin: 0; font-size: 1rem;">4. What is the total supply of $BIGCHILL tokens, and how are they allocated?</h4>
+                <p style="font-size: 0.9rem; margin: 5px 0;">The total supply of $BIGCHILL tokens is 1 <b>billion</b> <b>(1,000,000,000)</b>. A portion of this supply is allocated for pre-sale, rewards, marketing, and future ecosystem development. Check the tokenomics section of the website for a detailed breakdown of allocations.</p>
+            </div>
+        </div>
+        <button id="close-faq" 
+                style="background: #FFD700; color: #000; border: none; padding: 10px; border-radius: 5px; cursor: pointer; display: block; margin: 10px auto; font-weight: bold;">
+            Close
+        </button>
+    </div>
+</div>
+	    <!-- Main Content -->
+    <div class="content">
+        <!-- Header Section -->
+        <div class="header">
+            <img src="bigchill.png" alt="Logo">
+            <h1>BIGCHILL</h1>
+        </div>
+	
+<!-- Main Banner Section -->
+<div class="main-banner">
+    <h1>Launching Soon! Get 3x the Solana You Spend!</h1>
+    <p>Be part of the most exciting presale event in the blockchain world!</p>
+<a href="javascript:void(0);" id="joinPresaleButton" style="background: #FFD700; padding: 10px 20px; color: black; border-radius: 5px; text-decoration: none;">Join the Pre-Sale Now!</a>
+</div>
+  
+  <!-- Modal -->
+<div id="presaleModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999;">
+    <div style="width: 80%; margin: 50px auto; background: #1a1a1a; padding: 20px; border-radius: 10px; color: white;">
+        <!-- Modal Header -->
+        <div style="text-align: right;">
+            <button id="closeModal" style="background: #FFD700; color: black; border: none; padding: 10px; cursor: pointer;">Close</button>
+        </div>
+        <h2 style="text-align: center; color: #FFD700;">Complete Your $BIGCHILL Purchase</h2>
+
+        <!-- Modal Calculator Section -->
+        <div id="reward-calculator-modal" style="text-align: center; padding: 20px; margin: 30px auto; border: 2px solid #FFD700; border-radius: 10px; max-width: 400px; background: #1a1a1a; color: #fff;">
+            <h2 style="color: #FFD700;">Dynamic Reward Calculator</h2>
+            <p>Calculate how many $BIGCHILL tokens you'll get!</p>
+            <form id="calculator-form-modal">
+                <label for="solAmountModal" style="display: block; margin-bottom: 10px;">Enter Amount of Solana (SOL):</label>
+                <input type="number" id="solAmountModal" name="solAmountModal" placeholder="e.g., 10" style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #FFD700; margin-bottom: 20px;" required>
+                <p id="outputModal" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">$BIGCHILL: 0</p>
+                <p id="usdOutputModal" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">$USD: 0</p>
+                <p id="bonusOutputModal" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">BONUS: 0</p>
+                <button type="button" id="calculateButtonModal" style="padding: 10px 20px; background-color: #FFD700; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Calculate</button>
+            </form>
+        </div>
+
+        <!-- Contract Address -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h3>Copy the contract address below:</h3>
+            <p style="font-size: 1rem;">Contract Address: <strong id="modalContractAddress">9AZTn9aDtgbWwr9meNe7tUtRGe1ciVFRPfZxN4bYGEpj</strong></p>
+            <button id="copyAddressModal" style="padding: 10px 20px; background-color: #FFD700; border: none; border-radius: 5px; cursor: pointer;">Copy Address</button>
+        </div>
+
+        <!-- Instructions -->
+        <div style="text-align: center; margin-top: 20px;">
+            <h3>Instructions:</h3>
+            <p>1. Use the provided calculator to determine how much Solana (SOL) you need to send to get the desired amount of $BIGCHILL.</p>
+            <p>2. Copy the contract address above.</p>
+            <p>3. Go to your Solana wallet (e.g., Phantom or Trustwallet), paste the contract address, and send the calculated amount.</p>
+            <p>4. Send the payment and take a screenshot as proof of transaction.</p>
+            <p>5. Submit your screenshot in the designated Telegram bot called the : <a href="https://t.me/Bigchills74" style="color: #FFD700;">BIGCHILL PAYMENT GATEWAY</a>.</p>
+            <p>6. Once confirmed, you'll receive your $BIGCHILL token within 1 minute!</p>
+        </div>
+    </div>
+</div>
+  
+      <div class="content">
+        <!-- Header Section -->
+        <div class="header">
+            <p>Coolest memecoin built on the Solana blockchain. Keep it chill, keep it BIG!</p>
+        </div>
+
+        <!-- Token Information -->
+        <div class="token-info">
+            <h2>Ticker: $BIGCHILL</h2>
+            <p>Contract Address: <strong>9AZTn9aDtgbWwr9meNe7tUtRGe1ciVFRPfZxN4bYGEpj</strong></p>
+            <h2>About $BIGCHILL</h2>
+            <p>Reveling chill vibes and maximum gains. $BIGCHILL is for those who like their memes frosty and their gains frosty-cool!</p>
+            <h2>Tokenomics</h2>
+            <p>Supply: 1,000,000,000 $BIGCHILL</p>
+            
+            <!-- Countdown Timer -->
+            <div id="countdownTimer" class="countdown-container">
+                <h2>Time Left Until Pre-Sale Ends:</h2>
+                <p id="timer"></p>
+            </div>
+            
+  
+    <!-- Floating Solana Logos -->
+    <div class="solana-logo-container">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 10%; left: 20%;">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 20%; left: 50%;">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 30%; left: 80%;">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 50%; left: 40%;">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 70%; left: 60%;">
+        <img src="solana-sol-logo.png" class="solana-logo" style="top: 90%; left: 10%;">
+    </div>
+    <!-- Dynamic Reward Calculator Section -->
+<div id="reward-calculator-main" style="text-align: center; padding: 20px; margin: 30px auto; border: 2px solid #FFD700; border-radius: 10px; max-width: 400px; background: #1a1a1a; color: #fff;">
+    <h2 style="color: #FFD700;">Dynamic Reward Calculator</h2>
+    <p>Calculate how many $BIGCHILL tokens you'll get!</p>
+    <form id="calculator-form-main">
+        <label for="solAmountMain" style="display: block; margin-bottom: 10px;">Enter Amount of Solana (SOL):</label>
+        <input type="number" id="solAmountMain" name="solAmountMain" placeholder="e.g., 10" style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #FFD700; margin-bottom: 20px;" required>
+        <p id="outputMain" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">$BIGCHILL: 0</p>
+        <p id="usdOutputMain" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">$USD: 0</p>
+        <p id="bonusOutputMain" style="margin: 20px 0; font-weight: bold; font-size: 1.2rem; color: #FFD700;">BONUS: 0</p>
+        <button type="button" id="calculateButtonMain" style="padding: 10px 20px; background-color: #FFD700; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Calculate</button>
+    </form>
+</div>
+<!-- Horizontal Liquid Progress Bar Section -->
+<div id="liquid-progress-bar" style="text-align: center; margin: 30px auto;">
+    <h2 style="color: #FFD700;">Token Sale Progress</h2>
+    <div style="position: relative; width: 300px; height: 50px; margin: 0 auto; overflow: hidden; border-radius: 25px; border: 3px solid #FFD700; background: #ddd;">
+        <!-- Liquid Layer -->
+        <div id="liquid-layer" style="position: absolute; width: 0; height: 100%; background: linear-gradient(90deg, #00C6FF, #0072FF); animation: liquid-shake 2s infinite ease-in-out; border-radius: 25px;"></div>
+        <!-- Text Overlay -->
+        <span id="progress-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1rem; font-weight: bold; color: #FFF;">50% Sold Out</span>
+    </div>
+</div>
+
+    <!-- Testimonial Section -->
+    <div class="testimonials">
+        <h2>What Our Users Are Saying</h2>
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <img src="1200px-Telegram_logo.svg.png" alt="User 1">
+                <p>"$BIGCHILL is the next big thing! I made great gains, and the community is amazing!"</p>
+                <h3>Emma Carter</h3>
+            </div>
+            <div class="testimonial-card">
+                <img src="1200px-Telegram_logo.svg.png" alt="User 2">
+                <p>"I love the vibes around $BIGCHILL. It's a fun and rewarding experience!"</p>
+                <h3>John Daniels</h3>
+            </div>
+            <div class="testimonial-card">
+                <img src="1200px-Telegram_logo.svg.png" alt="User 3">
+                <p>"Incredible token with huge potential. The presale was a game-changer for me!"</p>
+                <h3>Sophia Patel</h3>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+            <!-- Live Charts -->
+            <div class="charts">
+                <h3>Live Charts</h3>
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+                    {
+                        "symbols": [["CRYPTOCAP:SOL|1D"]],
+                        "chartOnly": false,
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "en",
+                        "colorTheme": "dark",
+                        "autosize": true
+                    }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="socials">
+            <a href="https://x.com/Bigchill_token?t=h3K0CWTLiOhRXtWQ8FeuQw&s=09" target="_blank">
+                <img src="1691832581twitter-x-icon-png.png" alt="Twitter">
+            </a>
+            <a href="https://t.me/+dCF2Xstzj0gwMjE0" target="_blank">
+                <img src="1200px-Telegram_logo.svg.png" alt="Telegram">
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer Marquee -->
+    <footer>
+        <marquee>Welcome to $BIGCHILL - Chill Vibes, Big Gains!</marquee>
+    </footer>
+    <script>
+    // Get the notification container
+    const notificationContainer = document.getElementById('notification-container');
+
+    // Function to generate a random wallet
+    function generateRandomWallet() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let wallet = '';
+        for (let i = 0; i < 12; i++) {
+            wallet += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return wallet.substring(0, 6) + 'XXX'; // Obscure wallet with "XXX"
+    }
+
+    // Function to generate a random purchase amount
+    function generateRandomAmount() {
+        return (Math.random() * (100 - 1) + 1).toFixed(2); // Random amount between 1 and 100
+    }
+
+    // Function to display a notification
+    function showNotification() {
+        const wallet = generateRandomWallet();
+        const amount = generateRandomAmount();
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerText = `Wallet ${wallet} bought $BIGCHILL worth ${amount} SOL!`;
+
+        notificationContainer.appendChild(notification);
+
+        // Remove the notification after 3 seconds
+        setTimeout(() => {
+            notificationContainer.removeChild(notification);
+        }, 5000);
+    }
+
+    // Show a notification every 20 seconds
+    setInterval(showNotification, 10000);
+</script>
+<script>
+    // Set the target date (December 23rd, 2024)
+    var targetDate = new Date("Dec 23, 2024 00:00:00").getTime();
+
+    // Update the timer every second
+    var timerInterval = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = targetDate - now;
+
+        // Calculate days, hours, minutes, and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result
+        document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+
+        // If the countdown ends, display a message
+        if (distance < 0) {
+            clearInterval(timerInterval);
+            document.getElementById("timer").innerHTML = "Pre-Sale Has Ended!";
+        }
+    }, 1000);
+</script>
+
+<script>
+// Main Calculator Logic
+document.getElementById('calculateButtonMain').onclick = function () {
+    const solAmountInput = parseFloat(document.getElementById('solAmountMain').value);
+    const outputMain = document.getElementById('outputMain');
+    const usdOutputMain = document.getElementById('usdOutputMain');
+    const bonusOutputMain = document.getElementById('bonusOutputMain');
+
+    if (isNaN(solAmountInput) || solAmountInput <= 0) {
+        alert("Please enter a valid Solana amount.");
+        return;
+    }
+
+    // Calculate values
+    const usdValue = solAmountInput * solToUsd;
+    const bigChillTokens = (usdValue / solToUsd) * totalSupply;
+    const bonus = usdValue * 3;
+
+    // Update outputs
+    outputMain.textContent = `Tokens: ${bigChillTokens.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    usdOutputMain.textContent = `USD: $${usdValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    bonusOutputMain.textContent = `BONUS: $${bonus.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+};
+</script>
+
+
+<script>
+    // Total tokens and percentage sold
+    const totalTokens = 1_000_000_000; // Total supply
+    const soldTokens = 673_000_000; // Tokens sold
+    const soldPercentage = (soldTokens / totalTokens) * 100;
+
+    // Update the liquid width and text
+    const liquidLayer = document.getElementById('liquid-layer');
+    const progressText = document.getElementById('progress-text');
+    liquidLayer.style.width = `${soldPercentage}%`;
+    progressText.textContent = `${soldPercentage.toFixed(0)}% Sold Out`;
+</script>
+
+<script>
+	// FAQ Toggle Logic
+document.getElementById("faq-button").addEventListener("click", function () {
+    const faqBox = document.getElementById("faq-box");
+    faqBox.style.display = faqBox.style.display === "block" ? "none" : "block";
+});
+
+// Close Button Logic
+document.getElementById("close-faq").addEventListener("click", function () {
+    document.getElementById("faq-box").style.display = "none";
+});
+</script>
+<script>
+// Get modal-specific elements
+const modal = document.getElementById('presaleModal');
+const joinButton = document.getElementById('joinPresaleButton');
+const closeButton = document.getElementById('closeModal');
+const copyButtonModal = document.getElementById('copyAddressModal'); // Unique copy button ID for modal
+const solAmountModalInput = document.getElementById('solAmountModal'); // Input field for modal
+const outputModal = document.getElementById('outputModal'); // Token output in modal
+const usdOutputModal = document.getElementById('usdOutputModal'); // USD output in modal
+const bonusOutputModal = document.getElementById('bonusOutputModal'); // Bonus output in modal
+
+// Constants
+const solToUsd = 225; // Current Solana to USD price
+const totalSupply = 1_000_000_000; // Total $BIGCHILL supply
+
+// Open modal when "Join the Presale Now" is clicked
+joinButton.onclick = function () {
+    modal.style.display = "block";
+};
+
+// Close modal when "Close" is clicked
+closeButton.onclick = function () {
+    modal.style.display = "none";
+};
+
+// Copy contract address to clipboard
+copyButtonModal.onclick = function () {
+    const address = document.querySelector('#modalContractAddress').innerText; // Target modal-specific contract address
+    navigator.clipboard.writeText(address).then(
+        () => alert('Contract Address copied to clipboard!'),
+        () => alert('Failed to copy contract address.')
+    );
+};
+
+// Modal Calculator Logic
+document.getElementById('calculateButtonModal').onclick = function () {
+    const solAmount = parseFloat(solAmountModalInput.value);
+    if (isNaN(solAmount) || solAmount <= 0) {
+        alert("Please enter a valid Solana amount.");
+        return;
+    }
+
+    // Calculate values
+    const usdValue = solAmount * solToUsd;
+    const bigChillTokens = (usdValue / solToUsd) * totalSupply;
+    const bonus = usdValue * 3;
+
+    // Update outputs
+    outputModal.textContent = `Tokens: ${bigChillTokens.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    usdOutputModal.textContent = `USD: $${usdValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    bonusOutputModal.textContent = `BONUS: $${bonus.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+};
+</script>
+<style>
+
+</body>
+</html>
